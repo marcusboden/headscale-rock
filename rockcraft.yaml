@@ -1,0 +1,31 @@
+name: headscale-rock
+base: ubuntu@24.04
+version: '0.1'
+summary: A rock for the headscale server
+description: |
+  This rock is made for use in conjunction with [the headscale-k8s charm](https://github.com/marcusboden/headscale-k8s-operator).
+platforms:
+    amd64:
+
+services:
+    headscale-server:
+        override: merge
+        command: /usr/bin/headscale serve
+        startup: enabled
+
+parts:
+    headscale:
+        plugin: go
+        source: https://github.com/juanfont/headscale
+        source-type: git
+        source-tag: v0.26.1
+        build-snaps:
+        - go/1.22/stable
+        stage-packages:
+        - ca-certificates_data
+    config:
+        plugin: dump
+        source: .
+        source-type: local
+        organize:
+          headscale.conf: etc/headscale/config.yaml
