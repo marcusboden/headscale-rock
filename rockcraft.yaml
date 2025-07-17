@@ -29,3 +29,13 @@ parts:
         source-type: local
         organize:
           headscale.conf: etc/headscale/config.yaml
+    hujson:
+        plugin: go
+        source: https://github.com/tailscale/hujson
+        source-type: git
+        build-snaps:
+        - go/1.22/stable
+        override-build: |
+            go mod tidy
+            go build cmd/hujsonfmt/hujsonfmt.go
+            install -D -m755 ${CRAFT_PART_BUILD}/hujsonfmt ${CRAFT_PART_INSTALL}/bin/hujsonfmt
