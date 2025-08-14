@@ -1,6 +1,6 @@
 name: headscale-rock
 base: ubuntu@24.04
-version: '0.1'
+version: '0.2'
 summary: A rock for the headscale server
 description: |
   This rock is made for use in conjunction with [the headscale-k8s charm](https://github.com/marcusboden/headscale-k8s-operator).
