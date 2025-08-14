@@ -39,3 +39,11 @@ parts:
             go mod tidy
             go build cmd/hujsonfmt/hujsonfmt.go
             install -D -m755 ${CRAFT_PART_BUILD}/hujsonfmt ${CRAFT_PART_INSTALL}/bin/hujsonfmt
+    sqlite-rsync:
+        plugin: autotools
+        source: https://github.com/sqlite/sqlite.git
+        source-type: git
+        override-build: |
+            ./configure
+            make sqlite3_rsync
+            install -D -m755 ${CRAFT_PART_BUILD}/sqlite3_rsync ${CRAFT_PART_INSTALL}/bin/sqlite3_rsync
