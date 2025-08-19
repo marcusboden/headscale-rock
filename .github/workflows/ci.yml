@@ -24,4 +24,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: rock
-        path: ${{ steps.build-rock.outputs.rock }}
+        path: ${{ steps.rockcraft.outputs.rock }}
