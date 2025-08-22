@@ -1,6 +1,6 @@
 name: headscale-rock
 base: ubuntu@24.04
-version: '0.2'
+version: '0.32'
 summary: A rock for the headscale server
 description: |
   This rock is made for use in conjunction with [the headscale-k8s charm](https://github.com/marcusboden/headscale-k8s-operator).
@@ -11,6 +11,10 @@ services:
     headscale-server:
         override: merge
         command: /usr/bin/headscale serve
+        startup: enabled
+    exporter:
+        override: merge
+        command: /usr/bin/headscale_exporter
         startup: enabled
 
 parts:
@@ -47,3 +51,11 @@ parts:
             ./configure
             make sqlite3_rsync
             install -D -m755 ${CRAFT_PART_BUILD}/sqlite3_rsync ${CRAFT_PART_INSTALL}/bin/sqlite3_rsync
+    exporter:
+        plugin: python
+        source: https://github.com/marcusboden/headscale-exporter
+        source-type: git
+        python-requirements: 
+          - requirements.txt
+        stage-packages:
+        - python3-venv
